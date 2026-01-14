@@ -110,7 +110,7 @@ if st.session_state.is_running:
                     history = "\n".join([f"{m['role']}: {m['content']}" for m in st.session_state.messages[-5:]])
                     
                     res = client.chat.completions.create(
-                        model= st.secrets["model"]
+                        model= st.secrets["model"],
                         messages=[
                             {"role": "system", "content": f"You are {speaker}. You are having a chat about '{topic}'. Keep responses short and conversational (max 30 words)."},
                             {"role": "user", "content": f"Previous conversation:\n{history}\nYour response:"}
