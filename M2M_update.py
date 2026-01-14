@@ -5,8 +5,8 @@ from openai import OpenAI
 
 # --- 1. 配置（如果 API 欠费，请保持 USE_MOCK_DATA = True） ---
 USE_MOCK_DATA = False  
-API_KEY = ""
-BASE_URL = "https://api.openai.com/v1"
+API_KEY = st.secrets["api_key"]
+BASE_URL = st.secrets["base_url"]
 
 # --- 2. 页面样式定义 ---
 st.set_page_config(layout="wide", page_title="AI Talks")
@@ -110,7 +110,7 @@ if st.session_state.is_running:
                     history = "\n".join([f"{m['role']}: {m['content']}" for m in st.session_state.messages[-5:]])
                     
                     res = client.chat.completions.create(
-                        model="gpt-3.5-turbo", # 如果是 DeepSeek 改为 deepseek-chat
+                        model= st.secrets["model"]
                         messages=[
                             {"role": "system", "content": f"You are {speaker}. You are having a chat about '{topic}'. Keep responses short and conversational (max 30 words)."},
                             {"role": "user", "content": f"Previous conversation:\n{history}\nYour response:"}
