@@ -91,13 +91,31 @@ st.markdown('<h1 style="text-align: center; color: #2d3436; font-family: Georgia
 st.markdown('<p style="text-align: center; color: #636e72; font-style: italic; margin-bottom: 50px;">Machine-to-Machine Philosophy</p>', unsafe_allow_html=True)
 
 # --- 5. 核心控制区 (中间排列) ---
-bt_col1, bt_col2, bt_col3 = st.columns(3)
+_, col_main, _ = st.columns([1, 2, 1])
+with col_main:
+    # 这一行缩进 4 个空格
+    topic = st.text_input("Topic", placeholder="...", label_visibility="collapsed")
+    
+    # 这一行也缩进 4 个空格，与上面的 topic 对齐
+    bt_col1, bt_col2, bt_col3 = st.columns(3)
+    
+    # 下面这些 with 语句必须相对于 st.columns(3) 再次缩进
     with bt_col1:
-        st.button("START")
+        if st.button("START"):
+            if topic:
+                st.session_state.topic = topic
+                st.session_state.is_running = True
+                st.rerun()
+    
     with bt_col2:
-        st.button("STOP")
+        if st.button("STOP"):
+            st.session_state.is_running = False
+            
     with bt_col3:
-        st.button("RESET")
+        if st.button("RESET"):
+            st.session_state.messages = []
+            st.session_state.is_running = False
+            st.rerun()
 with col_main:
     # 输入话题
     topic = st.text_input("Topic", placeholder="What shall the machines discuss?", label_visibility="collapsed")
