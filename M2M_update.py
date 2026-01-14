@@ -3,33 +3,82 @@ import time
 import random
 from openai import OpenAI
 
-# --- 1. 配置（如果 API 欠费，请保持 USE_MOCK_DATA = True） ---
+st.set_page_config(layout="wide", page_title="Digital Echoes", page_icon="🔮")
+# --- 1. 配置 ---
 USE_MOCK_DATA = False  
 API_KEY = st.secrets["api_key"]
 BASE_URL = st.secrets["base_url"]
 
 # --- 2. 页面样式定义 ---
-st.set_page_config(layout="wide", page_title="AI Talks")
+st.markdown("""
+    <div style="text-align: center; margin-bottom: 40px;">
+        <h1 style="color: #1E293B; font-family: 'Georgia', serif; font-size: 3rem; margin-bottom: 0;">Digital Echoes</h1>
+        <p style="color: #64748B; font-style: italic;">A Machine-to-Machine Conversation on Human Ideas</p>
+    </div>
+""", unsafe_allow_html=True)")
 
 st.markdown("""
     <style>
-    /* 隐藏默认元素 */
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
-    .stDeployButton {display:none;}
-    
-    /* 侧边栏样式 */
-    .topic-label { font-size: 1.2rem; font-weight: bold; margin-bottom: 10px; color: #333; }
-    
-    /* 聊天气泡布局 */
-    .bob-container { display: flex; align-items: flex-start; margin-bottom: 25px; }
-    .alice-container { display: flex; align-items: flex-start; justify-content: flex-end; margin-bottom: 25px; }
-    .bubble { background-color: #F0F2F6; padding: 15px 20px; border-radius: 20px; max-width: 65%; font-family: sans-serif; line-height: 1.5; box-shadow: 2px 2px 5px rgba(0,0,0,0.05); }
-    .avatar { width: 55px; height: 55px; margin: 0 15px; border-radius: 50%; }
-    
-    /* 按钮样式微调 */
-    div.stButton > button { width: 100%; height: 40px; border-radius: 8px; font-weight: bold; }
+    /* 全局背景：浅灰色渐变，增加质感 */
+    .stApp {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    }
+
+    /* 侧边栏：让它看起来像悬浮的面板 */
+    section[data-testid="stSidebar"] {
+        background-color: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        border-right: 1px solid rgba(0,0,0,0.05);
+    }
+
+    /* 聊天气泡：玻璃拟态效果 */
+    .bubble { 
+        background: white;
+        color: #333;
+        padding: 18px 22px; 
+        border-radius: 25px; 
+        max-width: 70%; 
+        font-size: 16px;
+        line-height: 1.6;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(255,255,255,0.8);
+        margin-bottom: 10px;
+    }
+
+    /* Bob 的气泡：淡淡的紫色边框 */
+    .bob-container .bubble {
+        border-left: 5px solid #6D28D9;
+        border-bottom-left-radius: 5px;
+    }
+
+    /* Alice 的气泡：淡淡的黄色边框 */
+    .alice-container .bubble {
+        border-right: 5px solid #F59E0B;
+        border-bottom-right-radius: 5px;
+    }
+
+    /* 头像微调：增加呼吸感 */
+    .avatar { 
+        width: 60px; 
+        height: 60px; 
+        border-radius: 50%; 
+        border: 2px solid white;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+    }
+    .avatar:hover { transform: scale(1.1); }
+
+    /* 按钮：彩色渐变 */
+    div.stButton > button {
+        background: linear-gradient(to right, #6D28D9, #7C3AED);
+        color: white !important;
+        border: none;
+        transition: all 0.3s ease;
+    }
+    div.stButton > button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(109, 40, 217, 0.4);
+    }
     </style>
     """, unsafe_allow_html=True)
 
