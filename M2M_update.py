@@ -144,12 +144,12 @@ with chat_box:
            # --- 在 Section 6 找到这段进行替换 ---
 
 # Bob 的图片
-st.markdown(f'''
-    <div class="bob-wrapper">
-        <img src="这里换成新的网址" class="avatar">
-        <div class="bubble">...</div>
-    </div>
-''', unsafe_allow_html=True)
+    st.markdown(f'''
+        <div class="bob-wrapper">
+            <img src="这里换成新的网址" class="avatar">
+            <div class="bubble">...</div>
+        </div>
+    ''', unsafe_allow_html=True)
 
 # Alice 的图片
 st.markdown(f'''
