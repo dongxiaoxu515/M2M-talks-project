@@ -15,7 +15,7 @@ st.markdown("""
         <h1 style="color: #1E293B; font-family: 'Georgia', serif; font-size: 3rem; margin-bottom: 0;">Digital Echoes</h1>
         <p style="color: #64748B; font-style: italic;">A Machine-to-Machine Conversation on Human Ideas</p>
     </div>
-""", unsafe_allow_html=True)")
+""", unsafe_allow_html=True)
 
 st.markdown("""
     <style>
