@@ -33,26 +33,70 @@ st.markdown("""
     .bob-wrapper { display: flex; flex-direction: row; align-items: flex-start; margin-bottom: 40px; width: 100%; animation: fadeIn 0.6s; }
     .alice-wrapper { display: flex; flex-direction: row-reverse; align-items: flex-start; margin-bottom: 40px; width: 100%; animation: fadeIn 0.6s; }
 
-  /* 聊天气泡样式 */
+  /* 聊天总容器：增加页边距 */
+    .chat-container { max-width: 800px; margin: auto; padding: 40px 20px; }
+
+    /* 通语气泡样式：增加渐变和阴影深度 */
     .bubble {
-        padding: 20px 25px; 
-        border-radius: 25px; 
+        padding: 18px 24px; 
+        border-radius: 20px; 
         font-size: 16px; 
         line-height: 1.6;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.08); 
-        background: white; 
+        background: #ffffff;
         color: #2d3436;
-    .bob-wrapper .bubble { border-left: 8px solid #6c5ce7; margin-left: 20px; border-top-left-radius: 5px; }
-    .alice-wrapper .bubble { border-right: 8px solid #ff7675; margin-right: 20px; border-top-right-radius: 5px; }
-        /* --- 修改这里：从 70% 缩小到 55% --- */
-        max-width: 55%; 
+        /* 增加分层阴影，让气泡更有悬浮感 */
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1);
+        max-width: 55%; /* 缩短宽度 */
+        position: relative;
+        transition: all 0.3s ease; /* 增加平滑动画 */
     }
 
+    /* 鼠标悬停效果：微小放大和阴影增强 */
+    .bubble:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
 
-    
-    /* 头像样式 */
-    .avatar { width: 75px; height: 75px; border-radius: 15px; background: white; padding: 5px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+    /* Bob 的气泡：增加左侧尖角小尾巴 */
+    .bob-wrapper .bubble { 
+        border-left: 6px solid #6c5ce7; 
+        margin-left: 25px; 
+        background: linear-gradient(to bottom right, #ffffff, #f9f8ff);
+    }
+    .bob-wrapper .bubble::before {
+        content: "";
+        position: absolute;
+        left: -10px; top: 20px;
+        border-style: solid;
+        border-width: 10px 10px 10px 0;
+        border-color: transparent #6c5ce7 transparent transparent;
+    }
 
+    /* Alice 的气泡：增加右侧尖角小尾巴 */
+    .alice-wrapper .bubble { 
+        border-right: 6px solid #ff7675; 
+        margin-right: 25px; 
+        background: linear-gradient(to bottom left, #ffffff, #fffafa);
+    }
+    .alice-wrapper .bubble::after {
+        content: "";
+        position: absolute;
+        right: -10px; top: 20px;
+        border-style: solid;
+        border-width: 10px 0 10px 10px;
+        border-color: transparent transparent transparent #ff7675;
+    }
+
+    /* 头像美化：增加白色描边 */
+    .avatar { 
+        width: 70px; 
+        height: 70px; 
+        border-radius: 18px; 
+        border: 3px solid white;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+   
     /* 输入框与按钮美化 (保留你之前的立体感) */
     .stTextInput input { border-radius: 15px; padding: 10px 20px; border: 1px solid #dcdde1; }
     div.stButton > button { 
