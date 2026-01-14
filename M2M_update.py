@@ -8,13 +8,6 @@ st.set_page_config(layout="wide", page_title="Digital Echoes", page_icon="🔮")
 USE_MOCK_DATA = False  
 API_KEY = st.secrets["api_key"]
 BASE_URL = st.secrets["base_url"]
-import streamlit as st
-import time
-import random
-from openai import OpenAI
-
-# --- 1. 页面配置 ---
-st.set_page_config(layout="wide", page_title="Digital Echoes", page_icon="🔮")
 
 # --- 2. 视觉样式优化 (加大页边距 + 修复输入框) ---
 st.markdown("""
@@ -23,7 +16,7 @@ st.markdown("""
     .stApp { background-color: #F0F2F6; }
     #MainMenu, footer, header, .stDeployButton { visibility: hidden; display: none; }
 
-    /* 整体页面布局控制：确保顶部留白足够 */
+    /* 整体页面布局控制：加大页边距 */
     .block-container {
         padding-top: 5rem !important;
         padding-bottom: 5rem !important;
@@ -31,51 +24,32 @@ st.markdown("""
         padding-right: 10% !important;
     }
 
-    /* 增强输入框视觉：修复边框不完整问题 */
-    .stTextInput {
-        margin-bottom: 20px !important;
-    }
+    /* 增强输入框视觉：确保显示完整 */
     .stTextInput div div input {
         border: 2px solid #6c5ce7 !important;
-        border-radius: 14px !important;
-        height: 65px !important; /* 再次调高，确保边框有空间显示 */
-        font-size: 1.3rem !important;
-        padding: 10px 25px !important;
+        border-radius: 12px !important;
+        height: 60px !important; /* 增加高度防止切断 */
+        font-size: 1.2rem !important;
+        padding: 10px 20px !important;
         background-color: white !important;
-        line-height: 1.5 !important;
-        box-sizing: border-box !important; /* 确保高度包含边框 */
     }
 
-    /* 修复按钮容器：确保三个按钮间距完全一致 */
-    [data-testid="column"] {
-        padding: 0 10px !important; /* 给每列增加相等的内边距 */
+    /* 聊天气泡布局：缩小最大宽度以增加视觉页边距 */
+    .chat-container { 
+        max-width: 800px; 
+        margin: auto; 
     }
 
-    /* 浅色立体按钮：优化质感 */
-    div.stButton > button {
-        width: 100% !important;
-        border-radius: 15px !important;
-        height: 55px !important;
-        font-weight: 800 !important;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        border: none !important;
-        border-bottom: 5px solid rgba(0,0,0,0.1) !important;
-        transition: all 0.1s ease;
-    }
-    
-    div.stButton > button:active {
-        border-bottom: 0px solid transparent !important;
-        transform: translateY(4px) !important;
-    }
+    .bob-wrapper { display: flex; flex-direction: row; align-items: flex-start; margin-bottom: 45px; animation: fadeIn 0.6s; }
+    .alice-wrapper { display: flex; flex-direction: row-reverse; align-items: flex-start; margin-bottom: 45px; animation: fadeIn 0.6s; }
 
-    /* 重新校准按钮颜色 - 采用更清晰的选择器 */
-    div[data-testid="column"]:nth-of-type(1) button { background-color: #e8f5e9 !important; color: #2e7d32 !important; border-bottom-color: #c8e6c9 !important; }
-    div[data-testid="column"]:nth-of-type(2) button { background-color: #ffebee !important; color: #c62828 !important; border-bottom-color: #ffcdd2 !important; }
-    div[data-testid="column"]:nth-of-type(3) button { background-color: #e3f2fd !important; color: #1565c0 !important; border-bottom-color: #bbdefb !important; }
-
-    /* 动画与气泡保持原样... */
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .bubble {
+        padding: 22px 28px; border-radius: 25px; font-size: 16px; line-height: 1.6;
+        box-shadow: 2px 4px 15px rgba(0,0,0,0.06); background: white; color: #333;
+        max-width: 75%;
+    }
+    .bob-wrapper .bubble { border-left: 8px solid #0984e3; margin-left: 20px; border-top-left-radius: 5px; }
+    .alice-wrapper .bubble { border-right: 8px solid #fd79a8; margin-right: 20px; border-top-right-radius: 5px; }
 
     /* 头像样式 */
     .avatar { width: 70px; height: 70px; border-radius: 15px; background: white; padding: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
