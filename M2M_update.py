@@ -25,14 +25,16 @@ st.markdown("""
     }
 
     /* 增强输入框视觉：确保显示完整 */
-    .stTextInput div div input {
-        border: 2px solid #6c5ce7 !important;
-        border-radius: 12px !important;
-        height: 60px !important; /* 增加高度防止切断 */
-        font-size: 1.2rem !important;
-        padding: 10px 20px !important;
-        background-color: white !important;
-    }
+.stTextInput div div input {
+    border: 2px solid #6c5ce7 !important;
+    border-radius: 14px !important;
+    height: 65px !important; /* 调高高度，给边框留位置 */
+    font-size: 1.3rem !important;
+    padding: 10px 25px !important;
+    background-color: white !important;
+    line-height: 1.5 !important;
+    box-sizing: border-box !important; /* 核心：让边框往内缩，不被切断 */
+}
 
     /* 聊天气泡布局：缩小最大宽度以增加视觉页边距 */
     .chat-container { 
@@ -89,7 +91,13 @@ st.markdown('<h1 style="text-align: center; color: #2d3436; font-family: Georgia
 st.markdown('<p style="text-align: center; color: #636e72; font-style: italic; margin-bottom: 50px;">Machine-to-Machine Philosophy</p>', unsafe_allow_html=True)
 
 # --- 5. 核心控制区 (中间排列) ---
-_, col_main, _ = st.columns([1, 2, 1])
+bt_col1, bt_col2, bt_col3 = st.columns(3)
+    with bt_col1:
+        st.button("START")
+    with bt_col2:
+        st.button("STOP")
+    with bt_col3:
+        st.button("RESET")
 with col_main:
     # 输入话题
     topic = st.text_input("Topic", placeholder="What shall the machines discuss?", label_visibility="collapsed")
