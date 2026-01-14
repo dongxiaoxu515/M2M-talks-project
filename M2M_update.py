@@ -141,13 +141,23 @@ chat_box = st.container()
 with chat_box:
     for msg in st.session_state.messages:
         if msg["role"] == "Bob":
-            # 蓝色机器人 Bob
-            st.markdown(f'<div class="bob-wrapper"><img src="https://cdn-icons-png.flaticon.com/512/6819/6819642.png" class="avatar"><div class="bubble"><strong>Bob</strong><br>{msg["content"]}</div></div>', unsafe_allow_html=True)
-        else:
-            # 粉色机器人 Alice
-            st.markdown(f'<div class="alice-wrapper"><img src="https://cdn-icons-png.flaticon.com/512/6122/6122781.png" class="avatar"><div class="bubble"><strong>Alice</strong><br>{msg["content"]}</div></div>', unsafe_allow_html=True)
+           # --- 在 Section 6 找到这段进行替换 ---
 
-# --- 7. 底部控制 (Stop/Reset) ---
+# Bob 的图片
+st.markdown(f'''
+    <div class="bob-wrapper">
+        <img src="这里换成新的网址" class="avatar">
+        <div class="bubble">...</div>
+    </div>
+''', unsafe_allow_html=True)
+
+# Alice 的图片
+st.markdown(f'''
+    <div class="alice-wrapper">
+        <img src="这里换成新的网址" class="avatar">
+        <div class="bubble">...</div>
+    </div>
+''', unsafe_allow_html=True)
 if st.session_state.is_running or len(st.session_state.messages) > 0:
     st.write("---")
     _, c1, c2, _ = st.columns([2, 1, 1, 2])
