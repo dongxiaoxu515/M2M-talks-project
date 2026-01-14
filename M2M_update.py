@@ -33,13 +33,19 @@ st.markdown("""
     .bob-wrapper { display: flex; flex-direction: row; align-items: flex-start; margin-bottom: 40px; width: 100%; animation: fadeIn 0.6s; }
     .alice-wrapper { display: flex; flex-direction: row-reverse; align-items: flex-start; margin-bottom: 40px; width: 100%; animation: fadeIn 0.6s; }
 
-    /* 气泡样式 */
+  /* 聊天气泡样式 */
     .bubble {
-        padding: 20px 25px; border-radius: 25px; font-size: 16px; line-height: 1.6;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.08); background: white; color: #2d3436;
+        padding: 20px 25px; 
+        border-radius: 25px; 
+        font-size: 16px; 
+        line-height: 1.6;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08); 
+        background: white; 
+        color: #2d3436;
+        
+        /* --- 修改这里：从 70% 缩小到 55% --- */
+        max-width: 55%; 
     }
-    .bob-wrapper .bubble { border-left: 8px solid #6c5ce7; margin-left: 20px; border-top-left-radius: 5px; }
-    .alice-wrapper .bubble { border-right: 8px solid #ff7675; margin-right: 20px; border-top-right-radius: 5px; }
 
     /* 头像样式 */
     .avatar { width: 75px; height: 75px; border-radius: 15px; background: white; padding: 5px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
